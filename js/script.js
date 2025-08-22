@@ -4,6 +4,7 @@ const display = document.querySelector("input")
 let curnum = ""
 let lastnum = null
 let lastop = null
+let lastInput = null
 
 for(let button of buttons){
 
@@ -49,10 +50,13 @@ for(let button of buttons){
             lastop = null
             display.value = ""
         }
-        else if(value === "CE"){
+        else if(value === "+/-"){
             if(curnum !== ""){
-                curnum = ""
-                display.value = ""
+                curnum = (parseFloat(curnum) * -1).toString()
+                display.value = curnum
+            }else if(lastnum !== null){
+                lastnum = -lastnum
+                display.value = lastnum
             }
         }
         else if(value === "x²"){
@@ -60,7 +64,9 @@ for(let button of buttons){
                 let num = parseFloat(display.value)
                 let sq = Math.pow(num, 2)
                 display.value = sq
-                curnum = sq
+                curnum = ""
+                lastnum = sq
+                // lastop = null
             }
         }
         else if(value === "x³"){
@@ -68,15 +74,22 @@ for(let button of buttons){
                 let num = parseFloat(display.value)
                 let cu = Math.pow(num, 3)
                 display.value = cu
-                curnum = cu
+                curnum = ""
+                lastnum = cu
+                // lastop = null
             }
         }
         else if(value === "="){
 
-            if(lastnum !== null && curnum !== ""){
-                lastnum = operate(lastnum, parseFloat(curnum), lastop)
-                display.value = lastnum
-                curnum = ""
+            if (lastnum !== null) {
+                if (curnum !== "") {
+                    lastInput = parseFloat(curnum);
+                }
+                if (lastop && lastInput !== null) {
+                    lastnum = operate(lastnum, lastInput, lastop);
+                    display.value = lastnum;
+                    curnum = "";
+                }
             }
 
         }
@@ -97,7 +110,7 @@ function operate(a, b ,op){
 }
 
 function print(){
-    console.log("lastnum: " + lastnum)
-    console.log("curnum: " + curnum)
-    console.log("lastop: " + lastop)
+    console.log(lastnum)
+    console.log(lastop)
+    console.log(curnum)
 }
