@@ -108,9 +108,3 @@ function operate(a, b ,op){
         case "÷" : return b===0 ? "error" : a/b
     }
 }
-
-function print(){
-    console.log(lastnum)
-    console.log(lastop)
-    console.log(curnum)
-}
