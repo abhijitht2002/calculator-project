@@ -108,4 +108,3 @@ function operate(a, b ,op){
         case "÷" : return b===0 ? "error" : a/b
     }
 }
-}
